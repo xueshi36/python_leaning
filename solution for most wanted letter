@@ -1,0 +1,47 @@
+import re
+def checkio(text):
+    text = text.lower()
+    text_list = list(set(text))
+    pattern = re.compile(r'([a-z])')
+    new_text_list=[]
+    for text_list_letter in text_list:
+        if pattern.match(text_list_letter) is None:
+            pass
+        else:
+            new_text_list.append(text_list_letter)
+    dicts = {}
+    for letter in new_text_list:
+        i = 0
+        for word in text:
+            if letter is word :
+                i = i + 1
+            else:
+                pass
+        dicts[letter] = i
+    #print (dicts)
+    max_value = max(dicts.values())
+    #print (max_value)
+    most_wanted_list = []
+    for key in dicts.keys():
+        if dicts[key] is max_value:
+            most_wanted_list.append(key)
+        else:
+            pass
+    most_wanted_list.sort()
+    return most_wanted_list[0]
+    #return text[list_number]
+
+if __name__ == '__main__':
+    #These "asserts" using only for self-checking and not necessary for auto-testing
+    
+    assert checkio("Hello World!") == "l", "Hello test"
+    assert checkio("How do you do?") == "o", "O is most wanted"
+    assert checkio("One") == "e", "All letter only once."
+    assert checkio("Oops!") == "o", "Don't forget about lower case."
+    assert checkio("AAaooo!!!!") == "a", "Only letters."
+    assert checkio("abe") == "a", "The First."
+    print("Start the long test")
+    assert checkio("a" * 9000 + "b" * 1000) == "a", "Long."
+    print("The local tests are done.")
+    
+    #print(checkio("abe"))
