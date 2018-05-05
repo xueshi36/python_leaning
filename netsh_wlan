@@ -1,0 +1,17 @@
+import os
+import re
+
+wifi_infos = os.popen("netsh wlan show networks mode=bssid") #利用windows netsh wlan命令获取wifi信息
+wifi_infos = wifi_infos.read() #读取信息，不然不能用
+
+wifi_numb_compiles = re.compile("(当前.*可见)。")
+wifi_numb = re.findall(wifi_numb_compiles, wifi_infos)
+
+wifi_bssidlist_complies = re.compile(r"BSSID\s[0-9]\s+:(.*)\s")
+wifi_bssidlist = re.findall(wifi_bssidlist_complies, wifi_infos)
+
+wifi_signal_complies = re.compile(r"信号\s+:\s([0-9]+%)\s")
+wifi_signal = re.findall(wifi_signal_complies, wifi_infos)
+
+for i in range(0,len(wifi_bssidlist)):
+print(i, "::", wifi_bssidlist[i], '--->', wifi_signal[i])
