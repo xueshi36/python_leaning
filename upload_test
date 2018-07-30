@@ -1,0 +1,57 @@
+# -*- coding: utf-8 -*-
+from selenium import webdriver
+import win32gui
+import win32con
+import time
+
+driver_chrome = webdriver.Chrome('C:\Program Files (x86)\Google\Chrome\Application\chromedriver.exe')
+driver_chrome.get('http://sahitest.com/demo/php/fileUpload.htm')
+upload = driver_chrome.find_element_by_id('file')
+upload.click()
+time.sleep(1)
+
+# win32gui
+dialog = win32gui.FindWindow('#32770', u'打开')  # 对话框
+ComboBoxEx32 = win32gui.FindWindowEx(dialog, 0, 'ComboBoxEx32', None)
+ComboBox = win32gui.FindWindowEx(ComboBoxEx32, 0, 'ComboBox', None)
+Edit = win32gui.FindWindowEx(ComboBox, 0, 'Edit', None)  # 上面三句依次寻找对象，直到找到输入框Edit对象的句柄
+button = win32gui.FindWindowEx(dialog, 0, 'Button', None)  # 确定按钮Button
+
+win32gui.SendMessage(Edit, win32con.WM_SETTEXT, None, 'd:\\baidu.py')  # 往输入框输入绝对地址
+win32gui.SendMessage(dialog, win32con.WM_COMMAND, 1, button)  # 按button
+
+print(upload.get_attribute('value'))
+driver_chrome.quit()
+
+'''
+在这里你需要一个非常重要的小工具：Spy++，百度一下有很多，当然你也可以用autoIT自带的工具，不过没有这个好用，建议去下一个吧。
+
+而且，你得安装pywin32的库，你可以到这里找到对应你Python版本的库，注意32位还是64位一定要和你安装的Python版本对应。
+
+安装完成之后在【开始菜单Python的文件夹】里看到PyWin32的文档【Python for Windows Documentation】，你能从中找到对应的方法API。
+
+简单介绍几个用到的：
+
+win32gui.FindWindow(lpClassName=None, lpWindowName=None):
+
+自顶层窗口开始寻找匹配条件的窗口，并返回这个窗口的句柄。
+lpClassName：类名，在Spy++里能够看到
+lpWindowName：窗口名，标题栏上能看到的名字
+代码示例里我们用来寻找上传窗口，你可以只用其中的一个，用classname定位容易被其他东西干扰，用windowname定位不稳定，不同的上传对话框可能window_name不同，怎么定位取决于你的情况。
+win32gui.FindWindowEx(hwndParent=0, hwndChildAfter=0, lpszClass=None, lpszWindow=None)
+
+搜索类名和窗体名匹配的窗体，并返回这个窗体的句柄。找不到就返回0。
+hwndParent：若不为0，则搜索句柄为hwndParent窗体的子窗体。
+hwndChildAfter：若不为0，则按照z-index的顺序从hwndChildAfter向后开始搜索子窗体，否则从第一个子窗体开始搜索。
+lpClassName：字符型，是窗体的类名，这个可以在Spy++里找到。
+lpWindowName：字符型，是窗口名，也就是标题栏上你能看见的那个标题。
+代码示例里我们用来层层寻找输入框和寻找确定按钮
+win32gui.SendMessage(hWnd, Msg, wParam, lParam)
+
+hWnd：整型，接收消息的窗体句柄
+Msg：整型，要发送的消息，这些消息都是windows预先定义好的，可以参见系统定义消息（System-Defined Messages）
+wParam：整型，消息的wParam参数
+lParam：整型，消息的lParam参数
+代码示例里我们用来向输入框输入文件地址以及点击确定按钮
+至于win32api模块以及其他的方法，这里不进行更多描述，想要了解的自行百度或看pywin32文档。
+'''
