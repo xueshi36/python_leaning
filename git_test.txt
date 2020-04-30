@@ -1,1 +1,40 @@
-test
+G:\Program Files\python_leaning>git add git_test.txt
+
+G:\Program Files\python_leaning>git status -s
+A  git_test.txt
+
+G:\Program Files\python_leaning>git config --global user.name 'xueshi36'
+
+G:\Program Files\python_leaning>git config --global user.email xueshi36@163.com
+
+G:\Program Files\python_leaning>git commit -m 'fist commit'
+error: pathspec 'commit'' did not match any file(s) known to git
+
+G:\Program Files\python_leaning>git commit -m
+error: switch `m' requires a value
+
+G:\Program Files\python_leaning>git commit -m "fist time"
+[master 1f25209] fist time
+ 1 file changed, 1 insertion(+)
+ create mode 100644 git_test.txt
+
+G:\Program Files\python_leaning>git status
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+
+nothing to commit, working tree clean
+
+G:\Program Files\python_leaning>git push
+Logon failed, use ctrl+c to cancel basic credential prompt.
+Username for 'https://github.com': xueshi36
+Password for 'https://xueshi36@github.com':
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 262 bytes | 262.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/xueshi36/python_leaning.git
+   93f1c6e..1f25209  master -> master
